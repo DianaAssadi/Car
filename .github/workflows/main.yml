@@ -1,0 +1,168 @@
+package avia.company;
+
+public class AviaCompany {
+
+    private Transport[] transports;
+
+    public AviaCompany(Transport[] transports) {
+
+        this.transports = transports;
+    }
+
+    public Transport[] getTransports() {
+
+        return transports;
+    }
+}
+
+package avia.company;
+
+public class Helicopter extends Transport {
+    public Helicopter(int capacity, double loadCapacity) {
+
+        super(capacity, loadCapacity);
+    }
+
+    @Override
+    public String toString() {
+
+        return super.toString();
+    }
+}
+
+package avia.company;
+
+public class Main {
+    public static void main(String[] args) {
+        var passengerPlane = new Plane(144, 500.0);
+        var cargoPlane = new Plane(5, 600.0);
+        var helicopter = new Helicopter(1, 400.3);
+        var quadcopter = new Quadrocopter(0, 50.1);
+
+        var company = new AviaCompany(
+                new Transport[] {
+                        passengerPlane,
+                        cargoPlane,
+                        helicopter,
+                        quadcopter
+                }
+        );
+
+
+        System.out.println(
+                "Full capacity: " + Utils.getAviaCompanyCapacity(company)
+        );
+        System.out.println(
+                "Full load capacity: " + Utils.getAviaCompanyLoadCapacity(company)
+        );
+
+        System.out.println(
+                "Plane with capacity 5: " + Utils.getPlaneByCapacity(company, 5)
+        );
+        System.out.println(
+                "Plane load capacity 500: " + Utils.getPlaneByLoadCapacity(company, 500.0)
+        );
+    }
+}
+
+
+package avia.company;
+
+public class Plane extends Transport{
+    public Plane(int capacity, double loadCapacity) {
+        super(capacity, loadCapacity);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+}
+
+package avia.company;
+
+public class Quadrocopter extends Transport {
+    public Quadrocopter(int capacity, double loadCapacity) {
+
+        super(capacity, loadCapacity);
+    }
+
+    @Override
+    public String toString() {
+        return super.toString();
+    }
+}
+
+
+package avia.company;
+
+public class Transport {
+
+        private final int capacity;
+        private final double loadCapacity;
+
+        public Transport(int capacity, double loadCapacity) {
+            this.capacity = capacity;
+            this.loadCapacity = loadCapacity;
+        }
+
+        public int getCapacity() {
+            return capacity;
+        }
+
+        public double getLoadCapacity() {
+            return loadCapacity;
+        }
+
+        @Override
+        public String toString() {
+            return String.format(
+                    "AirTransport[capacity: '%s', loadCapacity: '%s'.",
+                    capacity,
+                    loadCapacity
+            );
+        }
+    }
+    
+    package avia.company;
+
+public class Utils {
+
+        public static int getAviaCompanyCapacity(AviaCompany company) {
+            int capacity = 0;
+            for (var transport : company.getTransports()) {
+                capacity += transport.getCapacity();
+            }
+            return capacity;
+        }
+
+        public static int getAviaCompanyLoadCapacity(AviaCompany company) {
+            int loadCapacity = 0;
+            for (var transport : company.getTransports()) {
+                loadCapacity += transport.getLoadCapacity();
+            }
+            return loadCapacity;
+        }
+
+        public static Plane getPlaneByCapacity(AviaCompany company, int capacity) {
+            for (var transport : company.getTransports()) {
+                if (transport instanceof Plane
+                        && transport.getCapacity() == capacity) {
+                    return (Plane) transport;
+                }
+            }
+            return null;
+        }
+
+        public static Plane getPlaneByLoadCapacity(AviaCompany company,
+                                                   double loadCapacity) {
+            for (var transport : company.getTransports()) {
+                if (transport instanceof Plane
+                        && transport.getLoadCapacity() == loadCapacity) {
+                    return (Plane) transport;
+                }
+            }
+            return null;
+        }
+
+    }
